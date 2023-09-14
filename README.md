@@ -15,7 +15,7 @@ The project is designed to be dataset independent so if there is a dataset that 
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
 
 ## Hyperparameter Tuning
-For this project, I chose to apply transfer learning on the Pretrained Resnet50 model provided by the torchvision library. Resnet50 is a convolutional neural network with a total of 50 convolutional and fully connected layers. The model has about 25 million trainable parameters. The provided model is trained on the ImageNet dataset so it has learned to find some relations and insights from training on a large number of images, so using transfer learning, we can transfer the knowledge from the pretrained model and use it to enhance the model for the task of dogbreed classification without needing too much data.
+In this initiative, my choice was to employ transfer learning utilizing the pretrained Resnet50 model from the torchvision library. Resnet50 is a type of convolutional neural network, encompassing 50 layers that include both convolutional and fully connected types. This model possesses approximately 25 million parameters that can be trained. Originally trained on the ImageNet dataset, the model has acquired valuable understanding and insights by processing a multitude of images. By leveraging transfer learning, we can repurpose this pre-existing knowledge to augment our model for the specific task of classifying dog breeds, without requiring an extensive dataset.
 
 Hyperparameter	Type	             Range
 Learning Rate	    Continous	    interval: [0.001, 0.1]
@@ -51,38 +51,41 @@ Epochs	                 Categorical	  Values: [1, 2]
 
 
 
-## Debugging and Profiling
-Model debugging is useful for capturing the values of the tensors as they flow through the model during the training & evaluation phases. In addition to saving & monitoring the tensors, sagemaker provides some prebuilt rules for analizing the tensors and extracting insights that are useful for understanding the process of training & evaluating the model.
+## Debugging and System Profiling
 
-I chose the to monitor the Loss Not Decreasing Rule during debugging the model which monitors if the loss isn't decreasing at an adequate rate.
+Debugging the model is crucial for tracking tensor values as they traverse through the model during both training and evaluation stages. Beyond capturing and observing these tensors, SageMaker also comes with predefined rules for examining the tensors, offering valuable insights into the training and evaluation mechanisms.
 
-Model Profiling is useful for capturing system metrics such as bottlenecks, CPU utilization, GPU utilization and so on. I used the ProfilerReport rule to generate a profiler report with statistics about the training run.
+For the debugging phase, I opted to focus on the "Loss Not Decreasing Rule," which keeps an eye on the rate at which the loss is reducing.
+
+System profiling is instrumental for monitoring various system metrics such as bottlenecks, CPU and GPU utilization, among others. I employed the ProfilerReport rule to produce a report that offers statistical insights into the performance metrics of the training session.
 
 ### Results
-Insights from the Plot
 
-* The training loss decreases with the number of steps.
-* The training loss is a bit noisy, may be this means that the training might have required a larger batch size.
-* The validation loss seems to be almost constant and it is very low compared to the training loss from the beginning which might be a sign of overfitting.
-* What to be applied if the plot was erronous Inorder to avoid overfitting we might try the following solutions:
+Findings from the Graph
+There's a decline in the training loss as the number of steps increases.
 
-* Maybe I need to use a smaller model compared to the resnet50 like the resnet18 for example.
-* Maybe I need to apply regularization to avoid overfitting over the dataset.
-* Maybe I need more data for my model..
+The training loss displays some variability, which could suggest that a larger batch size might have been more effective.
 
+The validation loss remains relatively stable and is considerably lower than the training loss right from the outset, potentially indicating overfitting.
 
-## Model Deployment
+If the graph were misleading, several approaches could be considered to mitigate overfitting:
 
-### Overview of Endpoint
-The deployed model is a resnet50 model pretrained on the ImageNet dataset and finetuned using the dog breed classification dataset.
+A smaller model like Resnet18 could potentially be a better fit than Resnet50.
+The introduction of regularization methods could help in curbing overfitting on the dataset.
+The model might benefit from an expanded dataset.
 
-The model takes an image of size (3, 224, 224) as an input and outputs 133 values representing the 133 possible dog breeds availabe in the dataset.
+## Deploying the Model
 
-The model doesn't apply softmax or log softmax (they are applied only inside the nn.crossentropy loss during training).
+### Endpoint Overview
+The model being deployed is a Resnet50, originally trained on the ImageNet dataset and further refined with the dog breed classification dataset.
 
-The model's output label can be found by taking the maximum over the 133 output values and finding its correponding index.
+The model accepts an image with dimensions of (3, 224, 224) and produces an array of 133 values, each corresponding to one of the 133 different dog breeds found in the dataset.
 
-The model was finetuned for 1 epoch using a batch size of 128 and learning rate ~0.05.
+Neither softmax nor log softmax operations are applied in the model output (these operations are exclusively part of the nn.crossentropy loss during the training phase).
+
+To identify the model's predicted label, the maximum value among the 133 output elements is located, and its corresponding index is taken as the label.
+
+The model underwent fine-tuning for a single epoch, with a batch size of 128 and an approximate learning rate of 0.05.
 
 
 ![Image7](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20110414.png?raw=true)
@@ -90,9 +93,11 @@ The model was finetuned for 1 epoch using a batch size of 128 and learning rate 
 
 
 ### Instructions to query the model
-* Provide the path of a local image to the Image.open() function from the PIL library to load the image as a PIL image.
 
-* Preprocess the image to prepare the tensor input for the resnet50 network. First the image is resized to (3x256x256) then a center crop is applied to make the image size (3x224x224), the image is then converted to a tensor with values from 0.0 to 1.0 and finally it is normalized by some common known values fro the mean and the standard deviation.
+Steps to Query the Model
+Utilize the Image.open() method from the PIL library to load your local image, specifying its file path. This will load the image as a PIL image object.
 
-* A request is then sent to the endpoint having the image as its payload
+The image must then go through preprocessing to be ready for input into the Resnet50 network. Initially, resize the image to dimensions of (3x256x256). Subsequently, apply a center crop to adjust the image size to (3x224x224). Convert the cropped image into a tensor with values ranging between 0.0 and 1.0. Lastly, normalize the tensor using well-known mean and standard deviation values.
+
+Once the image is preprocessed, dispatch a request to the deployed endpoint, with the processed image serving as the payload.
 
