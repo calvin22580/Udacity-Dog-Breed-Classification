@@ -25,7 +25,7 @@ Epochs	                 Categorical	  Values: [1, 2]
 
 - Include a screenshot of completed training jobs
 
-![Image1](https://user-images.githubusercontent.com/107848751/231981245-1c8e2823-7c06-4605-969a-9a700e5a304c.png)
+![Image1](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20103850.png?raw=true)
 
 
 - Logs metrics during the training process
