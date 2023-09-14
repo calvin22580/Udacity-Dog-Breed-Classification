@@ -30,27 +30,22 @@ Epochs	                 Categorical	  Values: [1, 2]
 
 - Logs metrics during the training process
 
-![Image2](https://user-images.githubusercontent.com/107848751/231981375-87c8110a-1ad5-4c71-9a3f-fc3d12929bd8.png)
+![Image2](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20104136.png?raw=true)
 
 
 - First Job
 
-![Image3](https://user-images.githubusercontent.com/107848751/231981450-0390ffc4-b288-42fb-8ab9-d65b6a598731.png)
+![Image3](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20104412.png?raw=true)
 
 
 - Second Job
 
-![Image4](https://user-images.githubusercontent.com/107848751/231981524-135334c4-5564-41e0-86e3-981645abab4b.png)
-
-
-- Third Job
-
-![Image5](https://user-images.githubusercontent.com/107848751/231981582-a3d513f3-ae6d-41f3-a12b-b93361c76eaf.png)
+![Image4](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20104753.png?raw=true)
 
 
 - The Best Hyparameter
 
-![Image6](https://user-images.githubusercontent.com/107848751/231981640-2e455c5e-841f-486a-8313-151cc9542551.png)
+![Image6](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20105210.png?raw=true)
 
 
 
@@ -90,7 +85,7 @@ The model's output label can be found by taking the maximum over the 133 output 
 The model was finetuned for 1 epoch using a batch size of 128 and learning rate ~0.05.
 
 
-![Image7](https://user-images.githubusercontent.com/107848751/231981719-caca10ba-6492-4a76-a611-7049b67b867f.png)
+![Image7](https://github.com/calvin22580/Udacity-Dog-Breed-Classification/blob/main/Screenshot/Screenshot%202023-09-14%20110414.png?raw=true)
 
 
 
